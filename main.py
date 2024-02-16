@@ -23,17 +23,14 @@ preload_models()
 
 nltk.download('punkt')
 
-script = """
-Welcome to our quick dive into React Hooks - the game-changer in how we write React components!
-React Hooks have been around since version 16.8, revolutionizing component development by allowing us to use state and other React features without writing a class. Today, we're going to uncover the basics of Hooks and show you how to use them. Let's get started!
-Hooks offer a way to 'hook into' React features from functional components. The most commonly used Hook is useState. Let's see it in action.
-Here, useState gives us two things: the current state value, count, and a function to update it, setCount. This is much simpler than the this.setState method in class components.
-Next up, let's talk about useEffect. This Hook lets you perform side effects in your components, such as fetching data, directly subscribing to updates, and more.
-With useEffect, you tell React to do something after render. React will remember the function you passed (we refer to it as an 'effect'), and call it later after performing the DOM updates.
-And there you have it! A quick look at useState and useEffect. Hooks are powerful and flexible, making them a valuable tool in your React toolkit.
-Thanks for watching! Dive into the React docs or check out more of our tutorials to get even deeper into Hooks and other advanced features. Happy coding!
-""".replace("\n", " ").strip()
 
+# load the script from script.txt file
+with open("script.txt", "r") as f:
+    script = f.read()
+
+script = script.replace("\n", " ").strip()
+
+# split the script into sentences
 sentences = nltk.sent_tokenize(script)
 
 GEN_TEMP = 0.6
@@ -41,7 +38,10 @@ SPEAKER = "v2/en_speaker_6"
 silence = np.zeros(int(0.25 * SAMPLE_RATE))  # quarter second of silence
 
 pieces = []
+idx = 0
 for sentence in sentences:
+    print(f"Generating audio for sentence {idx + 1}/{len(sentences)}")
+    idx += 1
     semantic_tokens = generate_text_semantic(
         sentence,
         history_prompt=SPEAKER,
@@ -53,4 +53,4 @@ for sentence in sentences:
     pieces += [audio_array, silence.copy()]
 
 
-sf.write("out/react_hooks.wav", np.concatenate(pieces), SAMPLE_RATE)
+sf.write("out/audio.wav", np.concatenate(pieces), SAMPLE_RATE)
