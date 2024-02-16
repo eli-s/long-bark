@@ -1,0 +1,4 @@
+Welcome to our quick dive into React Hooks - the game-changer in how we write React components!
+React Hooks have been around since version 16.8.
+revolutionizing component development by allowing us to use state and other React features without writing a class.
+Today, we're going to uncover the basics of Hooks and show you how to use them. Let's get started!
