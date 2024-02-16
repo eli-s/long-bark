@@ -49,8 +49,8 @@ for sentence in sentences:
         min_eos_p=0.05,  # this controls how likely the generation is to end
     )
 
-    audio_array = semantic_to_waveform(semantic_tokens, history_prompt=SPEAKER, device=device)
+    audio_array = semantic_to_waveform(semantic_tokens, history_prompt=SPEAKER)
     pieces += [audio_array, silence.copy()]
 
 
-sf.write("react_hooks.wav", np.concatenate(pieces), SAMPLE_RATE)
+sf.write("out/react_hooks.wav", np.concatenate(pieces), SAMPLE_RATE)
